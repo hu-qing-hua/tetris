@@ -1,0 +1,106 @@
+.content {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		height: 100vh;
+		background-color: aliceblue;
+	}
+	
+	.title{
+		display: flex;
+		flex-direction: row; 
+	    justify-content: space-around; 
+		align-items: center;
+		width: 90%;
+		padding: 5% 5px;
+		background-color: #ece3fa;
+		height:58px;
+		border-bottom: #d9d9d9 solid 1px;
+	}
+	
+	.texts{
+		display: flex;
+		flex-wrap: wrap;
+		align-content: center;
+		flex-direction: column;
+		/* first:{margin-bottom: 20px;} */
+	}
+	
+	.blockMinMap{
+		display: flex;
+		flex-direction: column;
+		width: 48px;
+		height: 48px;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.blockMinMap .line, .gameView .line{
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin: 0px;
+	}
+	
+	.blockMinMap .line view{
+		width: 12px;
+		height: 12px;
+	} 
+	
+	.gameView .line view{
+		border: 1px solid rgba(20,81,154,0.1);
+		width: 40upx;
+		height: 40upx;
+	}
+	
+	.blockMinMap .line .block{
+		border:1px solid #151715; 
+		width: 10px;
+		height: 10px;
+		background-color: #db602c;
+	    /* margin-left: -1px; */
+		/* position: relative; */
+	}
+	
+	.gameView .line .block{
+		border: 1px solid #333333;
+		background-color: #db602c;
+		/* margin-left: -1px; */ 
+		/* position: relative; */
+	}
+	
+	.gameView{
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	
+	.buttonView{
+		width: 90%;
+		padding: 5% 5px;
+		border-top: #cffffd solid 1px;
+		background-color: #FFFFFF;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+	}
+	
+	.buttonView view{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		width: 30%;
+		border: #555555 solid 1px;
+		border-radius: 10px;
+		height: 30px;
+		background-color: #cffffd;
+	}
+	
+	.buttonView view:active{
+		background-color: #c1f2bd;
+	}
