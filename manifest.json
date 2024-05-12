@@ -56,5 +56,8 @@
         },
         "usingComponents" : true
     },
-    "vueVersion" : "3"
+    "vueVersion" : "3",
+    "mp-toutiao" : {
+        "appid" : "tta104d7b93e323c1f01"
+    }
 }

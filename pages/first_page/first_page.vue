@@ -10,22 +10,30 @@
 					<view v-for="(b, j) in line" :key="'minimap-line-'+i+'-block-'+j" :class="{'block':b==1}"></view>
 				</view>
 			</view>
-			<view class="texts">
-				  <button @click="sendGameData">发送游戏数据</button>
-			</view>
+			<view class="ttui-cells">
+				<view class="ttui-cell">
+					<view class="ttui-cell__bd">允许观看</view>
+					<view class="ttui-cell__ft">
+						<switch bindchange="toggleSocket" checked="{{socketStatus == 'connected'}}" />
+					</view>
+				</view>
 		</view>
-		<view class="gameView" :style="{height:gameViewHeight+'px'}">
-			<view v-for="(line, i) in getTrueMap()" :key="'map-line-'+i" class="line">
-				<view v-for="(b, j) in line" :key="'map-line-'+i+'-block-'+j" :class="{'block':b>0}"
-					:style="{width:getGameViewBlockSize()+'px', height:getGameViewBlockSize()+'px'}"></view>
-			</view>
+	</view>
+	
+	<view class="gameView" :style="{height:gameViewHeight+'px'}">
+		<view v-for="(line, i) in getTrueMap()" :key="'map-line-'+i" class="line">
+			<view v-for="(b, j) in line" :key="'map-line-'+i+'-block-'+j" :class="{'block':b>0}"
+				:style="{width:getGameViewBlockSize()+'px', height:getGameViewBlockSize()+'px'}"></view>
 		</view>
-		<view class="buttonView" id="buttonView">
-			<view @tap="moveLeft()">←</view>
-			<view @tap="moveDown()">↓</view>
-			<view @tap="rotateBlock()">〇</view>
-			<view @tap="moveRight()">→</view>
-		</view>
+	</view>
+	
+	
+	<view class="buttonView" id="buttonView">
+		<view @tap="moveLeft()" @longpress="longpress">←</view>
+		<view @tap="moveDown()">↓</view>
+		<view @tap="rotateBlock()">〇</view>
+		<view @tap="moveRight()">→</view>
+	</view>
 	</view>
 </template>
 

@@ -1,10 +1,21 @@
+import {
+	init,
+	publishMessage
+} from "../../Connect.js"
+
+// //#ifdef MP-TOUTIAO
+// import  * as mqtt  from '/utils/mqtt.js';
+// console.log('mqtt+++++',mqtt);
+// //#endif
+
+
 export default {
 	data() {
 		return {
 			//地图大小
 			mapSize: [18, 10],
 			//下降时间:开始，结束，每升一级减少等待时间
-			downSpeed: [1500, 200, 100],
+			downSpeed: [1000, 200, 100],
 			//分数：现在分数，多少分升一级, step
 			score: [0, 10, 1],
 			//地图
@@ -125,8 +136,11 @@ export default {
 			gameOver: false,
 			//游戏循环体
 			gameUpdateFunc: null,
+
+			audio: null,
 		}
 	},
+
 	mounted() {
 		this.refreshNextBlock()
 		this.refreshNextBlock()
@@ -134,8 +148,11 @@ export default {
 	onLoad() {
 		this.initGame()
 
-
+		init(() => {
+			console.log('链接');
+		})
 	},
+
 	methods: {
 		initGame() {
 			var that = this;
@@ -150,6 +167,7 @@ export default {
 				that.tryGetGameHeight()
 				that.gameUpdate()
 			})
+
 		},
 		gameUpdate() {
 			var that = this;
@@ -348,6 +366,13 @@ export default {
 					newMap.push(JSON.parse(JSON.stringify(this.map[i])))
 				}
 			}
+
+			if (newMap.length < this.map.length) {
+				this.innerAudioContext = tt.createInnerAudioContext();
+				this.innerAudioContext.src = 'https://sf1-ttcdn-tos.pstatp.com/obj/developer/sdk/0000-0001.mp3';
+				this.innerAudioContext.play();
+			}
+
 			//补充缺失的行
 			while (newMap.length < this.map.length) {
 				var aline = []
@@ -365,6 +390,7 @@ export default {
 					this.map[i].push(0)
 				}
 			}
+			console.log(this.map);
 		},
 		tryGetGameHeight() {
 			var that = this;
@@ -408,7 +434,13 @@ export default {
 					);
 				}
 			}
-			// console.log(trueMap)
+			// console.log('数据',JSON.stringify(trueMap))
+			// send(trueMap)
+			publishMessage('gameData', {
+				data: trueMap,
+				score: this.score,
+				nextBlock: this.nextBlock
+			})
 			return trueMap;
 		}
 	}
