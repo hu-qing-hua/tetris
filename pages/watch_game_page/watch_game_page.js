@@ -129,6 +129,7 @@ export default {
 			gameViewHeight: 450,
 			//游戏结束
 			gameOver: false,
+
 			//游戏循环体
 			gameUpdateFunc: null,
 
@@ -136,26 +137,40 @@ export default {
 		}
 	},
 	mounted() {
-		this.refreshNextBlock()
-		this.refreshNextBlock()
+		// this.refreshNextBlock()
+		// this.refreshNextBlock()
 	},
 	onLoad() {
-		let that = this
+		let that = this //this可能改变，用that保存对当前对象的引用
 		init(() => {
 			subscribe('gameData')
 			listenData((res) => {
 				try {
-					let tmp = JSON.parse(res).data.data//JSON.parse(res)是将收到的字符串解析为JSON对象 
-					//JSON.parse(res).data.data是JSON.parse(res)的data字段的值
-					that.trueMap = tmp.data
+					let tmp = JSON.parse(res).data.data //JSON.parse(res)是将收到的字符串解析为JSON对象 
+					//JSON.parse(res).data.data是JSON.parse(res)的data字段的值,因为res除了返回定义好的数据，还会返回像网络状态、是否成功等信息
+					that.trueMap = tmp.map;
 					console.log(tmp);
 
-					that.nextBlock = tmp.nextBlock
+					that.gameOver = tmp.gameOver;
+					if (that.gameOver) {
+						uni.showModal({
+							showCancel: false,
+							confirmText: '再看一局',
+							title: '游戏结束',
+							content: '好友分数:' + this.score[0],
+							success: (res) => {
+								if (res.confirm) {
+									that.initGame()
+								}
+							}
+						})
+					}
+					that.nextBlock = tmp.nextBlock;
 					console.log('-------------', tmp.score);
-					if (tmp.score.length) that.score = tmp.score
+					if (tmp.score.length) that.score = tmp.score;
 
 					console.log(that.score);
-				} catch (e) {
+				} catch (e) { //catch()块用于捕获try块中可能抛出的异常
 					// console.log('错误',e);
 					//TODO handle the exception
 				}
@@ -178,18 +193,5 @@ export default {
 				parseInt((uni.getSystemInfoSync().windowWidth - padding) / this.mapSize[1])
 			)
 		},
-		refreshNextBlock() {
-			this.nowBlock = this.nextBlock
-			var nextBlock = [
-				parseInt(Math.random() * this.blocks.length),
-				0
-			]
-			nextBlock[1] = parseInt(this.blocks[nextBlock[0]].length * Math.random())
-			this.nextBlock = nextBlock
-			this.blockPosition = JSON.parse(JSON.stringify(this.startPosition));
-			// console.log(this.blockPosition)
-			this.$forceUpdate()
-		},
-
-	}
+	},
 }

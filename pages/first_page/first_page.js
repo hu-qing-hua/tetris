@@ -3,11 +3,9 @@ import {
 	publishMessage
 } from "../../Connect.js"
 
-// //#ifdef MP-TOUTIAO
-// import  * as mqtt  from '/utils/mqtt.js';
-// console.log('mqtt+++++',mqtt);
-// //#endif
-
+import {
+	ref
+} from 'vue'
 
 export default {
 	data() {
@@ -136,8 +134,8 @@ export default {
 			gameOver: false,
 			//游戏循环体
 			gameUpdateFunc: null,
-
-			audio: null,
+			// audio: null,
+			buttonValue: true,
 		}
 	},
 
@@ -434,14 +432,20 @@ export default {
 					);
 				}
 			}
-			// console.log('数据',JSON.stringify(trueMap))
-			// send(trueMap)
+
 			publishMessage('gameData', {
-				data: trueMap,
+				map: trueMap,
 				score: this.score,
-				nextBlock: this.nextBlock
+				nextBlock: this.nextBlock,
+				gameOver: this.gameOver,
 			})
 			return trueMap;
+		},
+
+		watchButton() {
+			this.buttonValue = !this.buttonValue;
 		}
+
+
 	}
 }
