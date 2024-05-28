@@ -1,8 +1,12 @@
 import {
 	init,
+	listenData,
 	subscribe,
-	listenData
 } from "../../Connect.js"
+
+import "../index/index_page.js"
+
+
 export default {
 	data() {
 		return {
@@ -141,10 +145,13 @@ export default {
 		// this.refreshNextBlock()
 	},
 	onLoad() {
-		let that = this //this可能改变，用that保存对当前对象的引用
+		let that = this; // 保存对当前对象的引用
+		let ID=that.inputId;
 		init(() => {
-			subscribe('gameData')
+			console.log('WebSocket initialized in onLoad');
+			subscribe(ID)
 			listenData((res) => {
+				console.log('listening');
 				try {
 					let tmp = JSON.parse(res).data.data //JSON.parse(res)是将收到的字符串解析为JSON对象 
 					//JSON.parse(res).data.data是JSON.parse(res)的data字段的值,因为res除了返回定义好的数据，还会返回像网络状态、是否成功等信息
@@ -154,9 +161,11 @@ export default {
 					that.gameOver = tmp.gameOver;
 					if (that.gameOver) {
 						uni.showModal({
-							showCancel: false,
+							showCancel: true,
 							confirmText: '再看一局',
 							title: '游戏结束',
+							cancelColor: '#006400',
+							confirmColor: '#007aff',
 							content: '好友分数:' + this.score[0],
 							success: (res) => {
 								if (res.confirm) {
@@ -174,9 +183,9 @@ export default {
 					// console.log('错误',e);
 					//TODO handle the exception
 				}
-
 			})
-		})
+
+		});
 	},
 	methods: {
 

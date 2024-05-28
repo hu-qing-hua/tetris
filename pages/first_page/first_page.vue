@@ -14,7 +14,7 @@
 			<view class="watchPart">
 				<button @click="watchButton">开关</button>
 				<h1 v-if="buttonValue">我想静静地玩(〃∀〃)</h1>
-				<h1 v-else>输入{{id}}看我操作(✪ω✪)</h1>
+				<h1 v-else>输入 {{id}} 看我操作(✪ω✪)</h1>
 			</view>
 
 		</view>

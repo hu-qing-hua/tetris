@@ -7,63 +7,17 @@
 		<view class="items">
 			<navigator url="/pages/first_page/first_page">进入游戏界面 --></navigator>
 		</view>
-		<view class="items">
-			<navigator url="/pages/watch_game_page/watch_game_page">在线观看游戏 --></navigator>
-		</view>
+		<button @click="handleClick">在线观看游戏 --></button>
+
+
 		<button class="button" @click="toggleMusic">{{ playing ? '关闭音乐' : '播放音乐' }}</button>
 		<view class="blank-line"></view>
 		<uni-link :href="href" :text="hrefText"></uni-link>
 	</view>
 </template>
 
-<script>
-	let dataUrl = 'https://sf1-ttcdn-tos.pstatp.com/obj/developer/sdk/0000-0001.mp3';
-	export default {
-		data() {
-			return {
-				href: 'https://uniapp.dcloud.io/component/README?id=uniui',
-				hrefText: "点击查看游戏指南",
-				// 添加一个用于跟踪音乐状态的变量
-				playing: false,
-				pause: true,
-				// 声明音乐实例
-			}
-		},
-		onLoad() {
-			if (this.innerAudioCtx) {
-				return;
-			}
-			const innerAudioCtx = this.innerAudioCtx = tt.createInnerAudioContext();
-			innerAudioCtx.src = dataUrl;
-			innerAudioCtx.startTime = 0;
-			innerAudioCtx.obeyMuteSwitch = false;
-			innerAudioCtx.onError((err) => {
-				console.log("onError: ", err);
-			});
-			innerAudioCtx.onCanplay(() => {
-				console.log("onCanplay");
-			});
-		},
-		onUnload() {
-			if (this.innerAudioCtx) {
-				this.innerAudioCtx.offCanplay();
-				this.innerAudioCtx.destroy();
-			}
-		},
-		methods: {
-			toggleMusic() {
-				// 切换音乐状态
-				this.pause = !this.pause;
-				this.playing = !this.playing;
-				if (this.playing) {
-					this.innerAudioCtx.play();
-				} else {
-					this.innerAudioCtx.pause();
-				}
-			}
-		}
-	};
-</script>
+
+<script src='./index_page'></script>
 
 <style>
 	.image-bg {

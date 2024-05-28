@@ -1,6 +1,10 @@
 import {
 	init,
-	publishMessage
+	subscribe,
+	listenData,
+	publishMessage,
+	generateId
+
 } from "../../Connect.js"
 
 import {
@@ -135,7 +139,10 @@ export default {
 			//游戏循环体
 			gameUpdateFunc: null,
 			// audio: null,
+
 			buttonValue: true,
+
+			id: '',
 		}
 	},
 
@@ -145,13 +152,19 @@ export default {
 	},
 	onLoad() {
 		this.initGame()
-
+		let that = this;
 		init(() => {
-			console.log('链接');
+			console.log('WebSocket initialized');
+			generateId((id) => {
+				console.log('Generated ID:', id);
+				that.id = id;
+			});
 		})
 	},
 
 	methods: {
+
+
 		initGame() {
 			var that = this;
 			this.initMap()
@@ -433,18 +446,20 @@ export default {
 				}
 			}
 
-			publishMessage('gameData', {
-				map: trueMap,
-				score: this.score,
-				nextBlock: this.nextBlock,
-				gameOver: this.gameOver,
-			})
+			if (!this.buttonValue) {
+				publishMessage(this.id, {
+					map: trueMap,
+					score: this.score,
+					nextBlock: this.nextBlock,
+					gameOver: this.gameOver,
+				})
+			}
 			return trueMap;
 		},
 
 		watchButton() {
 			this.buttonValue = !this.buttonValue;
-		}
+		},
 
 
 	}
