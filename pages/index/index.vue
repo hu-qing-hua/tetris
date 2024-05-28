@@ -7,9 +7,9 @@
 		<view class="items">
 			<navigator url="/pages/first_page/first_page">进入游戏界面 --></navigator>
 		</view>
-		<button @click="handleClick">在线观看游戏 --></button>
+		<button class="Button" @click="handleClick">在线观看游戏 --></button>
 
-
+		<view class="blank-line"></view>
 		<button class="button" @click="toggleMusic">{{ playing ? '关闭音乐' : '播放音乐' }}</button>
 		<view class="blank-line"></view>
 		<uni-link :href="href" :text="hrefText"></uni-link>
@@ -72,6 +72,15 @@
 
 	.blank-line {
 		height: 30px;
+	}
+
+	.Button {
+		color: #006400;
+		text-shadow: 0 0 0.2em #BDB76B;
+		font-size: 22px;
+		font-weight: 1000;
+		border-width: 0px;
+		background: transparent;
 	}
 
 	.button {
