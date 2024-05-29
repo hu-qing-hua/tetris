@@ -12,7 +12,7 @@
 			</view>
 			<view class="ttui-cells">
 				<view class="ttui-cell">
-					<view class="ttui-cell__bd">允许观看</view>
+					<view class="ttui-cell__bd">观看中</view>
 					<view class="ttui-cell__ft">
 						<!-- <switch bindchange="toggleSocket" checked="{{socketStatus == 'connected'}}" /> -->
 					</view>

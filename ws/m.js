@@ -14,7 +14,6 @@ wss.on('connection', function connection(ws) {
     });  
   });  
   
-  // ws.send('Hello, you have connected to the server!');  
 });
 
 
